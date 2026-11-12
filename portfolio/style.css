@@ -446,16 +446,16 @@ h1 span {
 .skill-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 14px;
+    gap: 13px;
 }
 
 .skill-card {
     position: relative;
-    min-height: 190px;
+    min-height: 185px;
     overflow: hidden;
-    padding: 21px;
+    padding: 20px;
     border: 1px solid #e5dacd;
-    border-radius: 6px;
+    border-radius: 5px;
     background: var(--surface);
     box-shadow: 0 5px 18px #57432e08;
     transition: translate .25s ease, box-shadow .25s ease, border-color .25s ease;
@@ -472,11 +472,12 @@ h1 span {
 }
 
 .skill-card:hover, .project-card:hover {
-    translate: 0 -5px;
     border-color: #c9ad92;
     box-shadow: 0 16px 30px #57432e14;
 }
 
+.skill-card:hover { translate: 0 -6px; }
+.project-card:hover { translate: 0 -5px; }
 .skill-card:hover::before, .project-card:hover::before { opacity: 1; }
 .skill-number { display: inline-block; margin-bottom: 22px; color: #987558; font-size: .72rem; font-weight: 700; }
 .skill-card h3 { margin-bottom: 8px; font-size: 1rem; letter-spacing: -.025em; }
