@@ -19,7 +19,10 @@
     <a class="skip-link" href="#contenu">Aller au contenu</a>
     <header class="site-header">
         <a class="brand" href="#accueil" aria-label="Retour à l’accueil">Peniel<span>.</span></a>
-        <nav aria-label="Navigation principale">
+        <button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" aria-label="Ouvrir le menu">
+            <span aria-hidden="true"></span>
+        </button>
+        <nav id="primary-navigation" aria-label="Navigation principale">
             <a href="#apropos">À propos</a>
             <a href="#formation">Formation</a>
             <a href="#competences">Compétences</a>
@@ -121,6 +124,41 @@
         const header = document.querySelector('.site-header');
         const progress = document.querySelector('.scroll-progress');
         const toTop = document.querySelector('.to-top');
+        const menuToggle = document.querySelector('.menu-toggle');
+        const primaryNavigation = document.getElementById('primary-navigation');
+
+        if (menuToggle && primaryNavigation) {
+            header.classList.add('has-mobile-menu');
+
+            const closeMobileMenu = () => {
+                header.classList.remove('is-menu-open');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.setAttribute('aria-label', 'Ouvrir le menu');
+            };
+
+            menuToggle.addEventListener('click', () => {
+                const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+                header.classList.toggle('is-menu-open', !isOpen);
+                menuToggle.setAttribute('aria-expanded', String(!isOpen));
+                menuToggle.setAttribute('aria-label', isOpen ? 'Ouvrir le menu' : 'Fermer le menu');
+            });
+
+            primaryNavigation.addEventListener('click', (event) => {
+                if (event.target instanceof Element && event.target.closest('a')) closeMobileMenu();
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && menuToggle.getAttribute('aria-expanded') === 'true') {
+                    closeMobileMenu();
+                    menuToggle.focus();
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 640) closeMobileMenu();
+            });
+        }
+
         let ticking = false;
         function onScroll() {
             const y = window.scrollY;
